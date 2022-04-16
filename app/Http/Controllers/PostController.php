@@ -124,6 +124,10 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $post = Post::find($id);
+        if(Auth::user()->id !== $post->user_id){
+            return redirect('dashboard')->with('error','You can not update other post');
+        }
         $this->validate($request,[
              'title' => 'required',
              'body' => 'required',
@@ -143,7 +147,6 @@ class PostController extends Controller
           $request->file('cover_image')->storeAs('public/cover_image', $fileNameToStore);
         }
 
-        $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         if($request->hasFile('cover_image')){
