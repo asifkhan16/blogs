@@ -5,6 +5,7 @@
 <div class="w-75 mx-auto p-4 mt-5 rounded d-form">
     @include('include.message')
     <a href="{{ url('posts') }}" class="btn btn-light">go back</a>
+    <a href="{{ url('trash') }}" class="btn btn-light"><- Trash</a>
 
     <h2>Create Post</h2>
     {{ Form::open(['route' => 'posts.store' , 'method'=>'POST' , 'enctype'=>'multipart/form-data']) }}

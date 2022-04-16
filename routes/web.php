@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController; 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TrashController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +26,13 @@ Route::get('/', function () {
 // Route::resource('posts','PostController');
 
 Auth::routes();
-Route::resource('posts',PostController::class);
-Route::resource('dashboard',DashboardController::class);
+Route::resources([
+    'posts' => PostController::class,
+    'dashboard' => DashboardController::class
+]);
+Route::get('trash',             [TrashController::class,'get_trash']);
+Route::get('trash/delete/{id}', [TrashController::class,'delete_trash']);
+Route::get('trash/restore/{id}',[TrashController::class,'restore_trash']);
 Route::get('posts/destroy/{id}',[PostController::class,'destroy']);
-Route::Post('store',[PostController::class, 'store']);
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::Post('store',            [PostController::class, 'store']);
+Route::get('/home',             [HomeController::class, 'index'])->name('home');
